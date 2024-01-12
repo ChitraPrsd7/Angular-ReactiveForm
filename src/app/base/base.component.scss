@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  header.navbar {
+    background-color: #343a40; /* Bootstrap dark theme background color */
+    color: white;
+  }
+  
+  .msb {
+    height: 100vh;
+    width: 200px;
+    background-color: #555;
+    color: #ffeb3b;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  .brand-name-wrapper {
+    padding: 15px;
+  }
+  
+  .side-menu-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+   
+  }
+  
+  .side-menu-container li {
+    padding: 10px;
+    cursor: pointer;
+    
+  }
+  
+  main {
+    margin-top: 60px; /* Adjusted for the fixed header height */
+  }
+  .fixed-header {
+    height: 35px; /* Set your desired height */
+   
+  }
+  .contain{
+    color: blueviolet;
+    padding:8px;
+    padding-top: 18px;
+    position: relative;
+    
+  }
+  .fixed-heading {
+    position: fixed;
+    top: 2px; /* Adjust the top value as needed */
+    left: 10px; /* Adjust the left value as needed */
+    /* Add any other styles for the fixed heading if needed */
+  }
+  

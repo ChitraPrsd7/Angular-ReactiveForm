@@ -1,0 +1,337 @@
+
+
+
+
+<div class="container bg-light m-5 p-5">
+    <h4 class="text-start">Personal Details</h4>
+    <form class="row g-3" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <div class="col-md-4">
+        <label for="firstName" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="firstName"
+          name="firstName"
+          id="firstName"
+          placeholder="Enter your first name"
+        />
+        <span
+          *ngIf="
+            myForm.get('firstName')?.invalid &&
+            (myForm.get('firstName')?.dirty || myForm.get('firstName')?.touched)
+          "
+          class="text-danger"
+        >
+          <span *ngIf="myForm.get('firstName')?.errors?.['required']">
+            First Name is required.
+          </span>
+        </span>
+      </div>
+      <div class="col-md-4">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="lastName"
+          name="lastName"
+          id="lastName"
+          placeholder="Enter your last name"
+        />
+        <span
+          *ngIf="
+            myForm.get('lastName')?.invalid &&
+            (myForm.get('lastName')?.dirty || myForm.get('lastName')?.touched)
+          "
+          class="text-danger"
+        >
+          <span *ngIf="myForm.get('lastName')?.errors?.['required']">
+            Last Name is required.
+          </span>
+        </span>
+      </div>
+      <div class="col-md-4">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          id="email"
+          placeholder="Enter your Email"
+        />
+        <span
+          *ngIf="
+            myForm.get('email')?.invalid &&
+            (myForm.get('email')?.dirty || myForm.get('email')?.touched)
+          "
+          class="text-danger"
+        >
+          <span *ngIf="myForm.get('email')?.errors?.['required']"
+            >Email is required.</span
+          >
+          <span *ngIf="myForm.get('email')?.hasError('email')"
+            >Invalid email format</span
+          >
+        </span>
+      </div>
+      <div class="col-md-4">
+        <label for="contactNum" class="form-label">Phone Number</label>
+        <input
+          type="text"
+          formControlName="contactNum"
+          class="form-control"
+          id="contactNum"
+          placeholder="Enter your phone number"
+        />
+        <span
+          *ngIf="
+            myForm.get('contactNum')?.invalid &&
+            (myForm.get('contactNum')?.dirty || myForm.get('contactNum')?.touched)
+          "
+          class="text-danger"
+        >
+          <span *ngIf="myForm.get('contactNum')?.errors?.['required']">
+            Phone Number is required.
+          </span>
+          <span *ngIf="myForm.get('contactNum')?.hasError('pattern')"
+            >Phone Number should contain only numbers.</span
+          ><span *ngIf="myForm.get('contactNum')?.errors?.['minlength']">
+            Minimum length requirement not met. </span
+          ><span *ngIf="myForm.get('contactNum')?.errors?.['maxlength']">
+            Max length requirement exceed.
+          </span>
+        </span>
+      </div>
+      <div class="col-md-4">
+        <label for="dob" class="form-label">Date Of Birth</label>
+        <input
+          type="date"
+          formControlName="dob"
+          [max]="maxDate"
+          (change)="personalAgeCalculation()"
+          class="form-control"
+          id="dob"
+          name="dob"
+        />
+        <span
+          *ngIf="
+            myForm.get('dob')?.invalid &&
+            (myForm.get('dob')?.dirty || myForm.get('dob')?.touched)
+          "
+          class="text-danger"
+        >
+          <span *ngIf="myForm.get('dob')?.errors?.['required']">
+            DOB is required.
+          </span>
+        </span>
+      </div>
+  
+      <div class="col-md-4" *ngIf="myForm.get('dob')?.value">
+        <label for="age" class="form-label">Age</label>
+        <input
+          type="text"
+          formControlName="age"
+          class="form-control"
+          id="age"
+          [value]="myForm.get('age')?.value"
+          readonly
+        />
+      </div>
+  <hr>
+    
+      <div>
+        <div class="row">
+          <div class="col-9 text text-start">
+            <h4>Family Details</h4>
+          </div>
+          
+        </div>
+      
+  
+        <div formArrayName="familyDetails">
+          <div
+            class="row"
+            *ngFor="let family of familyDetailsArray.controls; let i = index"
+            [formGroupName]="i"
+          >
+           
+            <div class="col-md-4 mt-4" *ngIf="i > 0">
+              <button
+                type="button"
+                class="btn btn-danger float-end"
+                (click)="removeFamilyDetails(i)"
+              >
+                <i class="bi bi-trash3-fill"></i>
+                Delete
+              </button>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="familyFirstName" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  formControlName="familyFirstName"
+                  class="form-control"
+                  id="familyFirstName"
+                  placeholder="Enter first name"
+                />
+                <span
+                  *ngIf="
+                    family.get('familyFirstName')?.invalid &&
+                    (family.get('familyFirstName')?.dirty ||
+                      family.get('familyFirstName')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  <span
+                    *ngIf="family.get('familyFirstName')?.errors?.['required']"
+                  >
+                    First Name is required.
+                  </span>
+                </span>
+              </div>
+  
+              <div class="col-md-4">
+                <label for="familyLastName" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  formControlName="familyLastName"
+                  class="form-control"
+                  id="familyLastName"
+                  placeholder="Enter last name"
+                />
+                <span
+                  *ngIf="
+                    family.get('familyLastName')?.invalid &&
+                    (family.get('familyLastName')?.dirty ||
+                      family.get('familyLastName')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  <span
+                    *ngIf="family.get('familyLastName')?.errors?.['required']"
+                  >
+                    Last Name is required.
+                  </span>
+                </span>
+              </div>
+              <div class="col-md-4">
+                <label for="familyEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  formControlName="familyEmail"
+                  id="familyEmail"
+                  placeholder="Enter email"
+                />
+                <span
+                  *ngIf="
+                    family.get('familyEmail')?.invalid &&
+                    (family.get('familyEmail')?.dirty ||
+                      family.get('familyEmail')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  <span *ngIf="family.get('familyEmail')?.errors?.['required']">
+                    Email is required.
+                  </span>
+                  <span *ngIf="family.get('familyEmail')?.hasError('email')">
+                    Invalid email format
+                  </span>
+                </span>
+              </div>
+              <div class="col-md-4"> <br>
+                <label for="familyContactNum" class="form-label"
+                  >Phone Number</label
+                >
+                <input
+                  type="text"
+                  formControlName="familyContactNum"
+                  class="form-control"
+                  id="familyContactNum"
+                  placeholder="Enter phone Number"
+                />
+                <span
+                  *ngIf="
+                    family.get('familyContactNum')?.invalid &&
+                    (family.get('familyContactNum')?.dirty ||
+                      family.get('familyContactNum')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  <span
+                    *ngIf="family.get('familyContactNum')?.errors?.['required']"
+                  >
+                    Contact Number is required.
+                  </span>
+                  <span
+                    *ngIf="family.get('familyContactNum')?.hasError('pattern')"
+                  >
+                    Contact Number is not valid.
+                  </span>
+                  <span
+                    *ngIf="family.get('familyContactNum')?.errors?.['minlength']"
+                  >
+                    Contact Number must be at least 10 digits.
+                  </span>
+                  <span
+                    *ngIf="family.get('familyContactNum')?.errors?.['maxlength']"
+                  >
+                    Contact Number must be at most 10 digits.
+                  </span>
+                </span>
+              </div>
+              <div class="col-md-4"> <br>
+                <label for="familyDOB" class="form-label">Date Of Birth</label> 
+                <input
+                  type="date"
+                  formControlName="familyDOB"
+                  [max]="maxDate"
+                  (change)="familyAgeCalculation(i)"
+                  class="form-control"
+                  id="familyDOB"
+                  name="familyDOB"
+                />
+                <span
+                  *ngIf="
+                    family.get('familyDOB')?.invalid &&
+                    (family.get('familyDOB')?.dirty ||
+                      family.get('familyDOB')?.touched)
+                  "
+                  class="text-danger"
+                >
+                  <span *ngIf="family.get('familyDOB')?.errors?.['required']">
+                    DOB is required.
+                  </span>
+                </span>
+              </div>
+              <div class="col-md-4" *ngIf="family.get('familyDOB')?.value"> <br>
+                <label for="familyAge" class="form-label">Age</label> 
+                <input
+                  type="text"
+                  formControlName="familyAge"
+                  class="form-control"
+                  id="familyAge"
+                  [value]="family.get('familyAge')?.value"
+                  readonly
+                />
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-6"> 
+        <button type="button" class="btn btn-dark" (click)="goBack()">Back
+          
+          
+        </button>
+      </div>
+      <div class="col-6"> 
+        <button type="submit" class="btn btn-primary float-end">Submit
+        
+        
+        </button>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-8">
+    <h1>All Details</h1>
+  </div>
+  <div class="col-md-4 text-end">
+    <button class="btn btn-outline-primary float-end" (click)="addForm()">
+      <i class="fa fa-plus"></i> Add More
+    </button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-striped mt-3">
+    <thead class="table-info">
+      <tr>
+        <th>#</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>Phone Num</th>
+        <th>DOB</th>
+        <th>Age</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of allDetailsForTable; let per_i = index">
+      <tr>
+        <td>{{ per_i + 1 }}</td>
+        <td>{{ item.firstName }}</td>
+        <td>{{ item.lastName }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.contactNum }}</td>
+        <td>{{ item.dob | date }}</td>
+        <td>{{ item.age | age }}</td>
+        <td>
+          <a routerLink="/home/view" [queryParams]="{ id: item.id }" class="btn btn-info btn-sm me-1">
+            <i class="fa fa-eye"></i> View
+          </a>
+          
+          <a routerLink="/home/edit" [queryParams]="{ id: item.id }" class="btn btn-warning btn-sm me-1">
+            <i class="fa fa-pencil"></i> Edit
+          </a>
+          <button class="btn btn-danger btn-sm" (click)="deleteByID(item.id)">
+            <i class="fa fa-trash"></i> Delete
+          </button>
+        </td>
+      </tr>
+
+      <!-- Nested loop for family details -->
+      <tr *ngFor="let familyDetail of item.familyDetails; let i = index">
+        <td></td>
+        <td>{{ familyDetail.familyFirstName }}</td>
+        <td>{{ familyDetail.familyLastName }}</td>
+        <td>{{ familyDetail.familyEmail }}</td>
+        <td>{{ familyDetail.familyContactNum }}</td>
+        <td>{{ familyDetail.familyDOB | date }}</td>
+        <td>{{ familyDetail.familyAge | age }}</td>
+        <td>
+          <!-- You can add actions for family details if needed -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<router-outlet></router-outlet>
